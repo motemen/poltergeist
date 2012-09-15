@@ -5,7 +5,7 @@ class Poltergeist
 
     # The QtWebKit bridge doesn't seem to like Function.prototype.bind
     that = this
-    phantom.onError = (message, stack) -> that.onError(message, stack)
+    phantom.onError = (message, stack) -> that.sendError(message, stack)
 
     @running = false
 
