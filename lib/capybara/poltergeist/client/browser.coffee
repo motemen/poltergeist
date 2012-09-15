@@ -165,6 +165,10 @@ class Poltergeist.Browser
   network_traffic: ->
     this.sendResponse(@page.networkTraffic())
 
+  page_settings: (settings) ->
+    @page.setSettings(settings)
+    this.sendResponse(true)
+
   exit: ->
     phantom.exit()
 

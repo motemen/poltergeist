@@ -105,6 +105,10 @@ class Poltergeist.WebPage
   setViewportSize: (size) ->
     @native.viewportSize = size
 
+  setSettings: (settings) ->
+    for key,value of settings
+      @native.settings[key] = value
+
   scrollPosition: ->
     @native.scrollPosition
 
