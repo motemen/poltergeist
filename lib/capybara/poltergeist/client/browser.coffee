@@ -25,11 +25,11 @@ class Poltergeist.Browser
     @page.onInitialized = =>
       @page_id += 1
 
-    @page.onConfirm = =>
-      this.ask('confirm', arguments)
+    @page.onConfirm = (args...) =>
+      this.ask('confirm', args)
 
-    @page.onPrompt = =>
-      this.ask('prompt', arguments)
+    @page.onPrompt = (args...) =>
+      this.ask('prompt', args)
 
   ask: (name, args) ->
     url = "http://127.0.0.1:#{this.owner.port}/#{name}?args=#{encodeURIComponent(JSON.stringify(args))}"
