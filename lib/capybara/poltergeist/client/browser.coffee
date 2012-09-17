@@ -44,6 +44,20 @@ class Poltergeist.Browser
         # window.
         setTimeout((=> this.push_window(name)), 0)
 
+    @page.onConfirm = (args...) =>
+      this.ask('confirm', args)
+
+    @page.onPrompt = (args...) =>
+      this.ask('prompt', args)
+
+  ask: (name, args) ->
+    url = "http://127.0.0.1:#{this.owner.port}/#{name}?args=#{encodeURIComponent(JSON.stringify(args))}"
+    xhr = new XMLHttpRequest
+    xhr.open 'GET', url, false # thus synchronous
+    xhr.send null
+    res = JSON.parse xhr.responseText
+    res.response
+
   sendResponse: (response) ->
     errors = @page.errors()
 
