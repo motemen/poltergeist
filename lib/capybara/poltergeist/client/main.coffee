@@ -1,5 +1,5 @@
 class Poltergeist
-  constructor: (port, width, height) ->
+  constructor: (@port, width, height) ->
     @browser    = new Poltergeist.Browser(this, width, height)
     @connection = new Poltergeist.Connection(this, port)
 
