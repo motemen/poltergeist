@@ -21,10 +21,12 @@ class Poltergeist
           res.headers = 'Content-Type': 'text/html'
 
           res.write "<img><script>+#{ ->
-            xhr = new XMLHttpRequest()
-            xhr.open 'GET', '/image', false
-            xhr.send()
-            document.querySelector('img').src = "data:image/png;base64,#{xhr.responseText}"
+            setTimeout(->
+              xhr = new XMLHttpRequest()
+              xhr.open 'GET', '/image', false
+              xhr.send()
+              document.querySelector('img').src = "data:image/png;base64,#{xhr.responseText}"
+            , 1000)
           }()</script>"
 
         res.close()
