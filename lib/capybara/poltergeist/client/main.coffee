@@ -7,6 +7,29 @@ class Poltergeist
     that = this
     phantom.onError = (message, stack) -> that.sendError(message, stack)
 
+    env = require('system').env
+    if env['SCREENSHOT_PORT']
+      server = require('webserver').create()
+      service = server.listen(env['SCREENSHOT_PORT'], (req, res) =>
+        res.statusCode = 200
+
+        console.log(req.url)
+
+        if req.url == '/image'
+          res.write @browser.page.native.renderBase64('PNG')
+        else
+          res.headers = 'Content-Type': 'text/html'
+
+          res.write "<img><script>+#{ ->
+            xhr = new XMLHttpRequest()
+            xhr.open 'GET', '/image', false
+            xhr.send()
+            document.querySelector('img').src = "data:image/png;base64,#{xhr.responseText}"
+          }()</script>"
+
+        res.close()
+      )
+
     @running = false
 
   runCommand: (command) ->
